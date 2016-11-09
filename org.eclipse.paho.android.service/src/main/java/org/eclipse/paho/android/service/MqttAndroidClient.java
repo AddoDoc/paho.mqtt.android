@@ -144,6 +144,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	private MqttClientPersistence persistence = null;
 	private MqttConnectOptions connectOptions;
 	private IMqttToken connectToken;
+	private DisconnectedBufferOptions bufferOpts;
 
 	// The MqttCallback provided by the application
 	private MqttCallback callback;
@@ -463,7 +464,9 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 		}
 		mqttService.setTraceEnabled(traceEnabled);
 		mqttService.setTraceCallbackId(clientHandle);
-		
+		if(bufferOpts != null){
+			mqttService.setBufferOpts(clientHandle, bufferOpts);
+		}
 		String activityToken = storeToken(connectToken);
 		try {
 			mqttService.connect(clientHandle, connectOptions, null,
@@ -1657,7 +1660,10 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * @param bufferOpts the DisconnectedBufferOptions
 	 */
 	public void setBufferOpts(DisconnectedBufferOptions bufferOpts) {
-		mqttService.setBufferOpts(clientHandle, bufferOpts);
+		this.bufferOpts = bufferOpts;
+		if(mqttService != null && clientHandle != null) {
+			mqttService.setBufferOpts(clientHandle, bufferOpts);
+		}
 	}
 
 	public int getBufferedMessageCount(){
