@@ -464,13 +464,14 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 		}
 		mqttService.setTraceEnabled(traceEnabled);
 		mqttService.setTraceCallbackId(clientHandle);
-		if(bufferOpts != null){
-			mqttService.setBufferOpts(clientHandle, bufferOpts);
-		}
+
 		String activityToken = storeToken(connectToken);
 		try {
 			mqttService.connect(clientHandle, connectOptions, null,
 					activityToken);
+			if(bufferOpts != null){ //Set buffer options after the client is ready
+				mqttService.setBufferOpts(clientHandle, bufferOpts);
+			}
 		}
 		catch (MqttException e) {
 			IMqttActionListener listener = connectToken.getActionCallback();
