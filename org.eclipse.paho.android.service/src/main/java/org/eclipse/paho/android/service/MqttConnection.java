@@ -1004,7 +1004,7 @@ class MqttConnection implements MqttCallbackExtended {
 	 */
 	void offline() {
 		
-		if (!disconnected && !cleanSession) {
+		if (/* !disconnected && */ !cleanSession) {
 			Exception e = new Exception("Android offline");
 			connectionLost(e);
 		}
