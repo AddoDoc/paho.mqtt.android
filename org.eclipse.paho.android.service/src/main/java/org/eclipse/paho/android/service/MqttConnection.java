@@ -1127,7 +1127,9 @@ class MqttConnection implements MqttCallbackExtended {
 	 */
 	public void setBufferOpts(DisconnectedBufferOptions bufferOpts) {
 		this.bufferOpts = bufferOpts;
-		myClient.setBufferOpts(bufferOpts);
+		if(myClient != null) {
+			myClient.setBufferOpts(bufferOpts);
+		}
 	}
 
 	public int getBufferedMessageCount(){
