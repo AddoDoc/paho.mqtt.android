@@ -68,6 +68,9 @@ class AlarmPingSender implements MqttPingSender {
 
 	@Override
 	public void start() {
+		if(comms.getClientState() == null){ //Possible fix for https://fabric.io/addodoc-prod/android/apps/com.addodoc.care/issues/584cf86d0aeb16625bdb8d78
+			return;
+		}
 		String action = MqttServiceConstants.PING_SENDER
 				+ comms.getClient().getClientId();
 		Log.d(TAG, "Register alarmreceiver to MqttService"+ action);
