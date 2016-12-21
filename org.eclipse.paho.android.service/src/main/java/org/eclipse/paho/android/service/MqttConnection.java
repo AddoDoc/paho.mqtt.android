@@ -187,7 +187,7 @@ class MqttConnection implements MqttCallbackExtended {
 	 * @param activityToken
 	 *            arbitrary identifier to be passed back to the Activity
 	 */
-	public void connect(MqttConnectOptions options, String invocationContext,
+	public synchronized void connect(MqttConnectOptions options, String invocationContext,
 			String activityToken) {
 		
 		connectOptions = options;
